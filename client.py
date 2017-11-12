@@ -1,25 +1,35 @@
 
 import socket
 from connection_handler import ConnectionHandler
-from send_receive import send_msg
+from communication_base import CommunicationBase
+import time
 
-class Client(object):
+class Client(CommunicationBase):
 
     def __init__(self, host, port):
         self.host = host
         self.port = port
+        self.conn = None
+        super(Client, self).__init__()
 
     def connect(self):
         # Create a TCP/IP socket
-        self.socket = socket.create_connection((self.host, self.port))
+        address = (self.host, self.port)
+        sock = socket.create_connection(address)
         try:
             # Send data
-            
-            conn = ConnectionHandler(self, self.socket)
+            self.conn = ConnectionHandler(sock, self._event_handler, address)
+            self.conn.start_thread()
+        except:
+            self.close()
+            raise
+    
+    def close(self):
+        self.conn.teardown()
 
-            send_msg(self.socket, 'test MESSAGE!')
-        finally:
-            self.socket.close()
+    def send_event(self, *args, **kwargs):
+        return self.conn.send_event(*args, **kwargs)
 
-client = Client('localhost', 5000)
-client.connect()
+if __name__ == '__main__':
+    client = Client('localhost', 5000)
+    client.connect()
