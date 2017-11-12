@@ -1,5 +1,5 @@
 
-# PyConnIO
+# PyCommIO
 
 A simple two-communication for python server-client scenarios.
 
