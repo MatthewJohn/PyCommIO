@@ -27,7 +27,7 @@ class Server(CommunicationBase):
 
                 client_obj = ConnectionHandler(client, self._event_handler, address)
                 self.connections[client_obj.get_id()] = client_obj
-                client_obj.start_thread()
+                client_obj.start_thread(ping=True)
         except KeyboardInterrupt:
             self.close()
             raise
@@ -38,15 +38,3 @@ class Server(CommunicationBase):
                 self.connections[connection_id].teardown()
             except:
                 pass
-
-
-if __name__ == '__main__':
-    server = Server()
-    @server.on_connect()
-    def conn(conn):
-        print 'got a connection'
-        conn.send_event('welcome', '')
-    @server.on('test')
-    def test(conn, data):
-        print 'got test data: %s' % data
-    server.start('0.0.0.0', 5000)

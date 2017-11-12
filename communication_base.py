@@ -7,11 +7,9 @@ class CommunicationBase(object):
     def __init__(self):
         self._event_handler = EventHandler()
 
-    def on_connect(self):
-        def register_connect(fnc):
-            self._event_handler.on_connect = fnc
-            return fnc
-        return register_connect
+    def on_connect(self, fnc):
+        self._event_handler.on_connect = fnc
+        return fnc
 
     def on(self, event_name):
         def register_function(fnc):
@@ -21,8 +19,6 @@ class CommunicationBase(object):
         register_function.event_name = event_name
         return register_function
 
-    def on_disconnect(self):
-        def register_disconnect(fnc):
-            self._event_handler.on_disconnect = fnc
-            return fnc
-        return register_disconnect
+    def on_disconnect(self, fnc):
+        self._event_handler.on_disconnect = fnc
+        return fnc
