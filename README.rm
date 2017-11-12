@@ -4,6 +4,8 @@
 
 # Server Example
 
+    from server import Server
+    
     server = Server()
     
     @server.on_connect
