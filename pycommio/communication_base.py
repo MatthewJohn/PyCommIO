@@ -1,6 +1,7 @@
 
 
-from event_handler import EventHandler
+from pycommio.event_handler import EventHandler
+
 
 class CommunicationBase(object):
 

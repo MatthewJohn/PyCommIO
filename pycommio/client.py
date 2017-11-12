@@ -1,8 +1,9 @@
 
 import socket
-from connection_handler import ConnectionHandler
-from communication_base import CommunicationBase
-import time
+
+from pycommio.connection_handler import ConnectionHandler
+from pycommio.communication_base import CommunicationBase
+
 
 class Client(CommunicationBase):
 

@@ -1,5 +1,4 @@
 
-import struct
 
 def _get_block(s, count):
     if count <= 0:

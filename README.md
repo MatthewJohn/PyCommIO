@@ -8,7 +8,7 @@ Sort of based on socket.io principles, but without the python compatibility issu
 
 ## Server Example
 
-    from server import Server
+    from pycommio.server import Server
     
     server = Server()
     
@@ -35,7 +35,7 @@ Sort of based on socket.io principles, but without the python compatibility issu
 
 ## Client Example
 
-    from client import Client
+    from pycommio.client import Client
     
     cl = Client('localhost', 5000)
     

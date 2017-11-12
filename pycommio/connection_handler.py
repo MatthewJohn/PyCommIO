@@ -4,7 +4,7 @@ import uuid
 import json
 import time
 
-from send_receive import send_msg, get_msg
+from pycommio.send_receive import send_msg, get_msg
 
 
 class ConnectionHandler(object):
