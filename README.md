@@ -24,9 +24,9 @@
 # Client Example
 
     from client import Client
-
+    
     cl = Client('localhost', 5000)
-
+    
     @cl.on('welcome')
     def welcome(conn, data):
         print 'Server said: %s' % data
