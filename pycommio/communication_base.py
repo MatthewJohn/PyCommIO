@@ -15,7 +15,6 @@ class CommunicationBase(object):
     def on(self, event_name):
         def register_function(fnc):
             self._event_handler.events[event_name] = fnc
-            print self._event_handler.events
             return fnc
         register_function.event_name = event_name
         return register_function

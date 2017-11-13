@@ -5,6 +5,8 @@ A simple two-communication for python server-client scenarios.
 
 Sort of based on socket.io principles, but without the python compatibility issues.
 
+## Please note that this project is still in VERY early stages
+
 ## Install
 
     git clone https://github.com/MatthewJohn/PyCommIO
