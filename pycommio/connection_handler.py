@@ -119,10 +119,7 @@ class ConnectionHandler(object):
                 if data_str:
                     try:
                         data = json.loads(data_str)
-                        try:
-                            self._handle_message(data)
-                        except Exception as exc:
-                            print('Message handle failure: {0}'.format(exc))
+                        self._handle_message(data)
                     except Exception as exc:
                         print('Error whilst handling message: {0}'.format(str(exc)))
                         print(traceback.format_exc())
