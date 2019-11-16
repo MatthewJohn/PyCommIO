@@ -107,7 +107,7 @@ class ConnectionHandler(object):
             print('resv pong')
         elif data['type'] == ConnectionHandler.EVENT:
             if data['name'] in self._event_handler.events:
-                event_handler = self.get_event_handler(data['name'])
+                event_handler = self._get_event_handler(data['name'])
                 return_data = event_handler(self, data['data'])
         else:
             raise Exception('Unknown message type: {0}'.format(data['type']))
