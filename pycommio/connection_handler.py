@@ -3,6 +3,7 @@ import threading
 import uuid
 import json
 import time
+import traceback
 from threading import Event
 
 from pycommio.send_receive import send_msg, get_msg
@@ -68,13 +69,13 @@ class ConnectionHandler(object):
 
     def _ping(self):
         while self._loop:
-            print 'Sending Ping'
+            print('Sending Ping')
             self._send_message(ConnectionHandler.PING)
             time.sleep(self._ping_interval)
 
     def teardown(self):
         self._loop = False
-        print 'connection lost'
+        print('connection lost')
         if self._event_handler.on_disconnect:
             self._event_handler.on_disconnect(self)
         self._socket.close()
@@ -100,15 +101,16 @@ class ConnectionHandler(object):
     def _handle_message(self, data):
         return_data = None
         if data['type'] == ConnectionHandler.PING:
-            print 'Received ping - sending pong'
+            print('Received ping - sending pong')
             self._send_message(ConnectionHandler.PONG)
         elif data['type'] == ConnectionHandler.PONG:
-            print 'resv pong'
+            print('resv pong')
         elif data['type'] == ConnectionHandler.EVENT:
             if data['name'] in self._event_handler.events:
                 event_handler = self.get_event_handler(data['name'])
                 return_data = event_handler(self, data['data'])
-
+        else:
+            raise Exception('Unknown message type: {0}'.format(data['type']))
 
     def _read_handler(self):
         try:
@@ -119,9 +121,10 @@ class ConnectionHandler(object):
                         data = json.loads(data_str)
                         try:
                             self._handle_message(data)
-                        except Exception, exc:
-                            print 'Message handle failure: %s' % exc
-                    except:
-                        print 'Bad message: %s' % data_str
-        except:
+                        except Exception as exc:
+                            print('Message handle failure: {0}'.format(exc))
+                    except Exception as exc:
+                        print('Error whilst handling message: {0}'.format(str(exc)))
+                        print(traceback.format_exc())
+        finally:
             self.teardown()
